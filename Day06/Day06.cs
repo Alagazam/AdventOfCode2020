@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -65,8 +66,10 @@ namespace AoC2020
         static void Main(string[] args)
         {
             var lines = File.ReadAllLines("Day06.txt");
-            Console.WriteLine("Day06a : {0}", Day06a(lines));
-            Console.WriteLine("Day06b : {0}", Day06b(lines));
+            var sw = Stopwatch.StartNew();
+            Console.WriteLine("Day06a : {0}   Time: {1}", Day06a(lines), sw.ElapsedMilliseconds);
+            sw.Restart();
+            Console.WriteLine("Day06b : {0}   Time: {1}", Day06b(lines), sw.ElapsedMilliseconds);
         }
     }
 }

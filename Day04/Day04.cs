@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -140,8 +141,10 @@ namespace AoC2020
         static void Main(string[] args)
         {
             var lines = File.ReadAllLines("Day04.txt");
-            Console.WriteLine("Day04a : {0}", Day04a(lines));
-            Console.WriteLine("Day04b : {0}", Day04b(lines));
+            var sw = Stopwatch.StartNew();
+            Console.WriteLine("Day04a : {0}   Time: {1}", Day04a(lines), sw.ElapsedMilliseconds);
+            sw.Restart();
+            Console.WriteLine("Day04b : {0}   Time: {1}", Day04b(lines), sw.ElapsedMilliseconds);
         }
     }
 }
