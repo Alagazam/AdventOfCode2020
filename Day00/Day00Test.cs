@@ -11,7 +11,7 @@ namespace AoC2020
         [Fact]
         public void Day00a()
         {
-            var lines = input.Split(Environment.NewLine);
+            var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
             Assert.Equal(0, Day00.Day00a(lines));
         }
@@ -20,7 +20,7 @@ namespace AoC2020
         [Fact]
         public void Day00b()
         {
-            var lines = input.Split(Environment.NewLine);
+            var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
             Assert.Equal(0, Day00.Day00b(lines));
         }
