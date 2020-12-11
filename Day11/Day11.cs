@@ -9,7 +9,7 @@ namespace AoC2020
 {
     public class Day11
     {
-        public static Int64 Day11a(string[] input)
+        private static long Calculate(string[] input, int maxLength, int maxNeightbours)
         {
             bool change = true;
             var occupied = 0;
@@ -21,30 +21,19 @@ namespace AoC2020
                 change = false;
                 occupied = 0;
 
-                for (int row= 0; row != seats.Length; ++row)
+                for (int row = 0; row != seats.Length; ++row)
                 {
                     updatedSeats[row] = new StringBuilder();
                     for (int seat = 0; seat != seats[row].Length; ++seat)
                     {
-                        var count = 0;
-                        if (row-1 >= 0 && seat-1 >= 0                   && seats[row-1][seat-1] == '#') ++count;
-                        if (row-1 >= 0                                  && seats[row-1][seat  ] == '#') ++count;
-                        if (row-1 >= 0 && seat+1 < seats[row].Length    && seats[row-1][seat+1] == '#') ++count;
-
-                        if (seat-1 >= 0                  && seats[row][seat-1] == '#') ++count;
-                        if (seat+1 < seats[row].Length   && seats[row][seat+1] == '#') ++count;
-
-                        if (row+1 < seats.Length && seat-1 >= 0                 && seats[row + 1][seat - 1] == '#') ++count;
-                        if (row+1 < seats.Length                                && seats[row + 1][seat] == '#') ++count;
-                        if (row+1 < seats.Length && seat+1 < seats[row].Length  && seats[row + 1][seat + 1] == '#') ++count;
-
+                        var count = CountSeen(seats, row, seat, maxLength);
                         if (seats[row][seat] == 'L' && count == 0)
                         {
                             updatedSeats[row].Append('#');
                             change = true;
                             occupied++;
                         }
-                        else if (seats[row][seat] == '#' && count >= 4)
+                        else if (seats[row][seat] == '#' && count >= maxNeightbours)
                         {
                             updatedSeats[row].Append('L');
                             change = true;
@@ -69,9 +58,46 @@ namespace AoC2020
             return occupied;
         }
 
+        private static bool CheckDirection(StringBuilder[] seats, int row, int seat, int xDir, int yDir, int maxLength)
+        {
+            while (maxLength != 0)
+            {
+                --maxLength;
+                row += yDir;
+                seat += xDir;
+                if (row >= 0 && row < seats.Length &&
+                    seat >= 0 && seat < seats[row].Length)
+                {
+                    if (seats[row][seat] == '#') return true;
+                    if (seats[row][seat] == 'L') return false;
+                }
+                else return false;
+            }
+            return false;
+        }
+        private static int CountSeen(StringBuilder[] seats, int row, int seat, int maxLength)
+        {
+            var count = 0;
+            if (CheckDirection(seats, row, seat, -1, -1, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, -1, 0, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, -1, 1, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, 0, -1, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, 0, 1, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, 1, -1, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, 1, 0, maxLength)) ++count;
+            if (CheckDirection(seats, row, seat, 1, 1, maxLength)) ++count;
+            return count;
+        }
+
+
+        public static Int64 Day11a(string[] input)
+        {
+            return Calculate(input, 1, 4);
+        }
+
         public static Int64 Day11b(string[] input)
         {
-            return 0;
+            return Calculate(input, int.MaxValue, 5);
         }
 
 

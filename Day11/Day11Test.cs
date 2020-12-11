@@ -63,7 +63,7 @@ L.LLLLL.LL
         {
             var lines = input.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
-            Assert.Equal(0, Day11.Day11b(lines));
+            Assert.Equal(26, Day11.Day11b(lines));
         }
     }
 
