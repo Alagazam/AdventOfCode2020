@@ -55,19 +55,19 @@ namespace AoC2020
         [Fact]
         public void Day13b_4()
         {
-            var lines = input2.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            var lines = input4.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             Assert.Equal(779210, Day13.Day13b(lines));
         }
 
         string input5 =
 @"939
-67,7, x,59,61
+67,7,x,59,61
 ";      // first occurs at timestamp 1261476.
 
         [Fact]
         public void Day13b_5()
         {
-            var lines = input2.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            var lines = input5.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             Assert.Equal(1261476, Day13.Day13b(lines));
         }
 
@@ -78,7 +78,7 @@ namespace AoC2020
         [Fact]
         public void Day13b_6()
         {
-            var lines = input2.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            var lines = input6.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             Assert.Equal(1202161486, Day13.Day13b(lines));
         }
     }
