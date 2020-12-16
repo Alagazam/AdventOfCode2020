@@ -1,5 +1,6 @@
 using System;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace AoC2020
 {
@@ -24,6 +25,13 @@ namespace AoC2020
 
             Assert.Equal(0, Day00.Day00b(lines));
         }
+
+        public Day00Test(ITestOutputHelper output)
+        {
+            var converter = new AoCUtils.Converter(output);
+            Console.SetOut(converter);
+        }
+
     }
 
 }
