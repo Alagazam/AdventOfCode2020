@@ -44,34 +44,41 @@ namespace AoC2020
             return (Int64)sum;
         }
 
-        static void SetMem(UInt64 address, string mask, UInt64 value, ref Dictionary<UInt64, UInt64> memory)
+        static void SetMem(UInt64 address, string mask, UInt64 value, ref SortedDictionary<UInt64, UInt64> memory, int scanBegin = 0)
         {
-            Console.WriteLine("SetMem(address={0}  mask={1}  value={2}", address, mask, value);
+            //Console.WriteLine("SetMem(address={0}  mask={1}  value={2}", address, mask, value);
 
             bool containsX = false;
-            for (var i = 0; i != mask.Length; ++i)
+            for (var i = scanBegin; i != mask.Length; ++i)
             {
                 if (mask[i]=='X')
                 {
                     containsX = true;
+                    var bit = (UInt64)1 << (35 - i);
+
+                    var andMask = ~bit;
+                    var newAddr = address &= andMask;
                     var zeroMask = mask[0..i] + '0' + mask[(i + 1)..];
-                    SetMem(address, zeroMask, value, ref memory);
+                    SetMem(address, zeroMask, value, ref memory, i+1);
+
                     var oneMask = mask[0..i] + '1' + mask[(i + 1)..];
-                    SetMem(address, oneMask, value, ref memory);
+                    newAddr = address |= bit;
+                    SetMem(newAddr, oneMask, value, ref memory, i+1);
+                    break;
                 }
             }
             if (!containsX )
             {
                 var m = Convert.ToUInt64(mask, 2);
                 var addr = address | m;
-                Console.WriteLine("Value={0}  mask={1}  address={2}  arrd={3}", value, mask, address, addr);
+                // Console.WriteLine("Value={0}  mask={1}  address={2}  addr={3}", value, mask, address, addr);
                 memory[addr] = value;
             }
         }
 
         public static Int64 Day14b(string[] input)
         {
-            var memory = new Dictionary<UInt64, UInt64>();
+            var memory = new SortedDictionary<UInt64, UInt64>();
             var mask = "";
             foreach (var line in input)
             {
@@ -85,8 +92,6 @@ namespace AoC2020
                     var address = UInt64.Parse(line[4..endBracket]);
                     var equalSign = line.IndexOf('=');
                     var value = UInt64.Parse(line[(equalSign + 2)..]);
-                    Console.WriteLine("SetMem(address={0}  mask={1}  value={2}", address, mask, value);
-
                     SetMem(address, mask, value, ref memory);
                 }
             }
