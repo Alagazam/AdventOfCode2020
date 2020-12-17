@@ -30,12 +30,26 @@ nearby tickets:
         }
 
 
+        string input2 =
+        @"departure class: 0-1 or 4-19
+row: 0-5 or 8-19
+seat: 0-13 or 16-19
+
+your ticket:
+11,12,13
+
+nearby tickets:
+20,1,1
+3,9,18
+15,1,5
+5,14,9
+";
         [Fact]
         public void Day16b()
         {
-            var lines = input.Split(Environment.NewLine);
+            var lines = input2.Split(Environment.NewLine);
 
-            Assert.Equal(0, Day16.Day16b(lines));
+            Assert.Equal(12, Day16.Day16b(lines));
         }
 
         public Day16Test(ITestOutputHelper output)
